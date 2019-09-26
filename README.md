@@ -14,7 +14,7 @@ It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033
 
 ## Applying the style guide
 
-To configure the IntelliJ/Android Studio formatter according to this style guide, go to Settings | Editor | Code Style | Kotlin, click Set from… link in the upper right corner, and select Predefined style | Kotlin style guide from the menu.
+To configure the IntelliJ/Android Studio formatter according to this style guide, go to Settings | Editor | Code Style | Kotlin, click Set from… link in the upper right corner, and select Predefined style | Kotlin style guide from the menu.<sup>[[link](#applying-the-style-guide)]</sup>
 
 ## Source code organization
 
@@ -45,21 +45,21 @@ Always put overloads next to each other in a class.<sup>[[link](#overload-layout
 
 ## Naming rules
 
-### Modules
+### Naming modules
 
 Names of modules are **always lower case** (`app`).
 Using multi-word names is generally discouraged, but if you do need to use multiple words, use **snake case** (`selection-store`).
 
-Names of modules should not be prefixed using company name (e.g. `cz-app`).
+Names of modules should not be prefixed using company name (e.g. `cz-app`).<sup>[[link](#naming-modules)]</sup>
 
-### Packages
+### Naming packages
 
 Names of packages are **always lower case** and do NOT use underscores (`com.cheerz.network`).
-Using multi-word names is generally discouraged, but if you do need to use multiple words, you can either simply concatenate them together or use camel humps (`com.cheerz.myPackage`).
+Using multi-word names is generally discouraged, but if you do need to use multiple words, you can either simply concatenate them together or use camel humps (`com.cheerz.myPackage`).<sup>[[link](#naming-packages)]</sup>
 
-### Names for test methods
+### Naming test methods
 
-In tests (and only in tests), it's acceptable to use method names with spaces enclosed in backticks. Underscores in method names are also allowed in test code.
+In tests (and only in tests), it's acceptable to use method names with spaces enclosed in backticks. Underscores in method names are also allowed in test code.<sup>[[link](#naming-test-methods)]</sup>
 
 ```java
 class MyTestCase {
@@ -73,7 +73,11 @@ class MyTestCase {
 
 ### Indentation
 
-Use 4 spaces for indentation. Do not use tabs.
+Use 4 spaces for indentation. Do not use tabs.<sup>[[link](#indentation)]</sup>
+
+### Line Length
+
+Keep each line of code to a readable length. Unless you have a reason to, keep lines to fewer than 120 characters.<sup>[[link](#line-length)]</sup>
 
 ### Horizontal whitespace
 
@@ -88,7 +92,7 @@ Put a space after `//`
 
 ### Function and expression body formatting
 
-<a name="single-line-expression"></a>Prefer using an expression body for functions with the body consisting of a single expression.<sup>[[link](#single-line-expression)]</sup>
+<a name="formating-single-line-expression"></a>Prefer using an expression body for functions with the body consisting of a single expression.<sup>[[link](#formating-single-line-expression)]</sup>
 
 ```java
 fun foo(): Int { // bad
@@ -99,7 +103,7 @@ fun foo(): Int { // bad
 fun foo() = 1    // good
 ```
 
-<a name="multiline-expression-body"></a>If the function has an expression body that doesn't fit in the same line as the declaration, put the `=` sign on the first line. Indent the expression body by 4 spaces.<sup>[[link](#multiline-expression-body)]</sup>
+<a name="formating-multiline-expression-body"></a>If the function has an expression body that doesn't fit in the same line as the declaration, put the `=` sign on the first line. Indent the expression body by 4 spaces.<sup>[[link](#formating-multiline-expression-body)]</sup>
 
 ```java
 fun f(x: String) =
@@ -108,7 +112,7 @@ fun f(x: String) =
 
 ### Formatting control flow statements
 
-<a name="multiline-condition-statement"></a>If the condition of an `if` or `when` statement is multiline, always use curly braces around the body of the statement. Put the closing parentheses of the condition together with the opening curly brace on a separate line:<sup>[[link](#multiline-condition-statement)]</sup>
+<a name="formating-multiline-condition-statement"></a>If the condition of an `if` or `when` statement is multiline, always use curly braces around the body of the statement. Put the closing parentheses of the condition together with the opening curly brace on a separate line:<sup>[[link](#formating-multiline-condition-statement)]</sup>
 
 ```java
 if (!component.isSyncing &&
@@ -118,7 +122,7 @@ if (!component.isSyncing &&
 }
 ```
 
-<a name="affirmative-condition-statement"></a>Prefer affirmative statements to negative ones.<sup>[[link](#affirmative-condition-statement)]</sup>
+<a name="formating-affirmative-condition-statement"></a>Prefer affirmative statements to negative ones.<sup>[[link](#formating-affirmative-condition-statement)]</sup>
 ```java
 if (!statment) {  // Bad
     doIfFalse()
@@ -134,7 +138,7 @@ if (statment) {   // Good
 }
 ```
 
-Put the `else`, `catch`, `finally` keywords, as well as the `while` keyword of a do/while loop, on the same line as the preceding curly brace:
+<a name="formating-curly-brace"></a>Put the `else`, `catch`, `finally` keywords, as well as the `while` keyword of a do/while loop, on the same line as the preceding curly brace:<sup>[[link](#formating-curly-brace)]</sup>
 
 ```java
 if (condition) {
@@ -161,41 +165,34 @@ val anchor = owner
     .dropWhile { it is PsiComment || it is PsiWhiteSpace }
 ```
 
-The first call in the chain usually should have a line break before it, but it's OK to omit it if the code makes more sense that way.
+The first call in the chain usually should have a line break before it, but it's OK to omit it if the code makes more sense that way.<sup>[[link](#chained-call-wrapping)]</sup>
 
-### Newlines
+### New lines
 
-* <a name="newline-after-conditional"></a>Add a new line after conditionals,
-    blocks, case statements, etc.<sup>[[link](#newline-after-conditional)]</sup>
+<a name="new-line-after-conditional"></a>Add a new line after conditionals,
+blocks, case statements, etc.<sup>[[link](#new-line-after-conditional)]</sup>
 
-    ```java
-    if (robot.isAwesome) {
-        doSomehting()
-    }
+```java
+if (robot.isAwesome) {
+    doSomehting()
+}
 
-    doSomehtingElse()
-    ```
+doSomehtingElse()
+```
 
-* <a name="newline-between-methods"></a>Include one, but no more than one, new
-    line between methods.<sup>[[link](#newline-between-methods)]</sup>
+<a name="newline-between-methods"></a>Include one, but no more than one, new
+line between methods.<sup>[[link](#newline-between-methods)]</sup>
 
-    ```java
-    // Bad
-    fun doSomething() { ... }
+```java
+// Bad
+fun doSomething() { ... }
 
 
-    fun doSomethingElse() { ... }
-    ```
+fun doSomethingElse() { ... }
+```
+```java
+// Good
+fun doSomething() { ... }
 
-    ```java
-    // Good
-    fun doSomething() { ... }
-
-    fun doSomethingElse() { ... }
-    ```
-
-## Line Length
-
-* Keep each line of code to a readable length. Unless
-  you have a reason to, keep lines to fewer than 150 characters.<sup>
-  [[link](#line-length)]</sup>
+fun doSomethingElse() { ... }
+```
