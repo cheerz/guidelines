@@ -4,7 +4,7 @@ This is Cheerz's Android Style Guide.
 
 It is based on [Kotlin's coding conventions](https://kotlinlang.org/docs/reference/coding-conventions.html)
 
-It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033955/https://github.com/styleguide/ruby) and [Airbnb's Ruby guide][https://github.com/airbnb/ruby].
+It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033955/https://github.com/styleguide/ruby) and [Airbnb's Ruby guide](https://github.com/airbnb/ruby).
 
 ## Table of Contents
   1. [Applying the style guide](#applying-the-style-guide)
@@ -14,7 +14,10 @@ It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033
 
 ## Applying the style guide
 
-To configure the IntelliJ/Android Studio formatter according to this style guide, go to Settings | Editor | Code Style | Kotlin, click Set from… link in the upper right corner, and select Predefined style | Kotlin style guide from the menu.<sup>[[link](#applying-the-style-guide)]</sup>
+To configure the IntelliJ/Android Studio formatter according to this style guide, 
+* Go to `Settings` | `Editor` | `Code Style` | `Kotlin`
+* Click `Set from…` link in the upper right corner
+* Select `Predefined style` | `Kotlin style guide` from the menu.<sup>[[link](#applying-the-style-guide)]</sup>
 
 ## Source code organization
 
@@ -55,7 +58,7 @@ Names of modules should not be prefixed using company name (e.g. `cz-app`).<sup>
 ### Naming packages
 
 Names of packages are **always lower case** and do NOT use underscores (`com.cheerz.network`).
-Using multi-word names is generally discouraged, but if you do need to use multiple words, you can either simply concatenate them together or use camel humps (`com.cheerz.myPackage`).<sup>[[link](#naming-packages)]</sup>
+Using multi-word names is generally discouraged, but if you do need to use multiple words, you can either simply concatenate them together (`com.cheerz.mypackage`).<sup>[[link](#naming-packages)]</sup>
 
 ### Naming test methods
 
