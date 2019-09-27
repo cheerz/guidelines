@@ -64,7 +64,7 @@ Using multi-word names is generally discouraged, but if you do need to use multi
 
 In tests (and only in tests), it's acceptable to use method names with spaces enclosed in backticks. Underscores in method names are also allowed in test code.<sup>[[link](#naming-test-methods)]</sup>
 
-```java
+```kotlin
 class MyTestCase {
      @Test fun `ensure everything works`() { ... }
      
@@ -86,10 +86,10 @@ Keep each line of code to a readable length. Unless you have a reason to, keep l
 
 Put a space after `//`
 
-```java
+```kotlin
 //this is a bad comment
 ```
-```java
+```kotlin
 // This is a good comment
 ```
 
@@ -97,18 +97,18 @@ Put a space after `//`
 
 <a name="formating-single-line-expression"></a>Prefer using an expression body for functions with the body consisting of a single expression.<sup>[[link](#formating-single-line-expression)]</sup>
 
-```java
+```kotlin
 fun foo(): Int { // bad
     return 1
 }
 ```
-```java
+```kotlin
 fun foo() = 1    // good
 ```
 
 <a name="formating-multiline-expression-body"></a>If the function has an expression body that doesn't fit in the same line as the declaration, put the `=` sign on the first line. Indent the expression body by 4 spaces.<sup>[[link](#formating-multiline-expression-body)]</sup>
 
-```java
+```kotlin
 fun f(x: String) =
     x.length
 ```
@@ -117,7 +117,7 @@ fun f(x: String) =
 
 <a name="formating-multiline-condition-statement"></a>If the condition of an `if` or `when` statement is multiline, always use curly braces around the body of the statement. Put the closing parentheses of the condition together with the opening curly brace on a separate line:<sup>[[link](#formating-multiline-condition-statement)]</sup>
 
-```java
+```kotlin
 if (!component.isSyncing &&
     !hasAnyKotlinRuntimeInScope(module)
 ) {
@@ -126,14 +126,14 @@ if (!component.isSyncing &&
 ```
 
 <a name="formating-affirmative-condition-statement"></a>Prefer affirmative statements to negative ones.<sup>[[link](#formating-affirmative-condition-statement)]</sup>
-```java
+```kotlin
 if (!statment) {  // Bad
     doIfFalse()
 } else {
     doIfTrue()
 }
 ```
-```java
+```kotlin
 if (statment) {   // Good
     doIfTrue()
 } else {
@@ -143,7 +143,7 @@ if (statment) {   // Good
 
 <a name="formating-curly-brace"></a>Put the `else`, `catch`, `finally` keywords, as well as the `while` keyword of a do/while loop, on the same line as the preceding curly brace:<sup>[[link](#formating-curly-brace)]</sup>
 
-```java
+```kotlin
 if (condition) {
     // body
 } else {
@@ -161,7 +161,7 @@ try {
 
 When wrapping chained calls, put the `.` character or the `?.` operator on the next line, with a single indent:
 
-```java
+```kotlin
 val anchor = owner
     ?.firstChild
     .siblings(forward = true)
@@ -175,7 +175,7 @@ The first call in the chain usually should have a line break before it, but it's
 <a name="new-line-after-conditional"></a>Add a new line after conditionals,
 blocks, case statements, etc.<sup>[[link](#new-line-after-conditional)]</sup>
 
-```java
+```kotlin
 if (robot.isAwesome) {
     doSomehting()
 }
@@ -186,14 +186,14 @@ doSomehtingElse()
 <a name="newline-between-methods"></a>Include one, but no more than one, new
 line between methods.<sup>[[link](#newline-between-methods)]</sup>
 
-```java
+```kotlin
 // Bad
 fun doSomething() { ... }
 
 
 fun doSomethingElse() { ... }
 ```
-```java
+```kotlin
 // Good
 fun doSomething() { ... }
 
