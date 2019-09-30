@@ -7,10 +7,10 @@ It is based on [Kotlin's coding conventions](https://kotlinlang.org/docs/referen
 It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033955/https://github.com/styleguide/ruby) and [Airbnb's Ruby guide](https://github.com/airbnb/ruby).
 
 ## Table of Contents
-  1. [Applying the style guide](#applying-the-style-guide)
-  1. [Source code organization](#source-code-organization)
-  1. [Naming rules](#naming-rules)
-  1. [Formatting](#formatting)
+  * [Applying the style guide](#applying-the-style-guide)
+  * [Source code organization](#source-code-organization)
+  * [Naming rules](#naming-rules)
+  * [Formatting](#formatting)
 
 ## Applying the style guide
 
@@ -72,6 +72,19 @@ class MyTestCase {
 }
 ```
 
+### Choosing good names
+
+**Names should be meaningful and concise.**
+
+The names should make it clear what the purpose of the entity is, so it's best to avoid using generic words (`Manager`, `Wrapper`, etc.) as names.
+
+The name of a class is usually a noun or a noun phrase explaining what the class _is_: `List`, `PersonReader`.
+
+The name of a method is usually a verb or a verb phrase saying what the method _does_: `close`, `readPersons`.
+The name should also suggest if the method is mutating the object or returning a new one. For instance `sort` is sorting a collection in place, while `sorted` is returning a sorted copy of the collection.<sup>[[link](#choosing-good-names)]</sup>
+
+<a name="naming-acronyms"></a>When using an acronym as part of a declaration name, capitalize it if it consists of two letters (`IOStream`); capitalize only the first letter if it is longer (`XmlFormatter`, `HttpInputStream`).<sup>[[link](#choosing-good-names)]</sup>
+
 ## Formatting
 
 ### Indentation
@@ -84,14 +97,39 @@ Keep each line of code to a readable length. Unless you have a reason to, keep l
 
 ### Horizontal whitespace
 
-Put a space after `//`
+Put spaces around binary operators (`a + b`). Exception: don't put spaces around the "range to" operator (`0..i`).
+
+Do not put spaces around unary operators (`a++`)
+
+Put spaces between control flow keywords (`if`, `when`, `for` and `while`) and the corresponding opening parenthesis.
+
+Do not put a space before an opening parenthesis in a primary constructor declaration, method declaration or method call.
 
 ```kotlin
-//this is a bad comment
+class A(val x: Int)
+
+fun foo(x: Int) { ... }
+
+fun bar() {
+    foo(1)
+}
 ```
-```kotlin
-// This is a good comment
-```
+
+Never put a space after `(`, `[`, or before `]`, `)`.
+
+Never put a space around `.` or `?.`: `foo.bar().filter { it > 2 }.joinToString()`, `foo?.bar()`
+
+Put a space after `//`: `// This is a comment`
+
+Do not put spaces around angle brackets used to specify type parameters: `class Map<K, V> { ... }`
+
+Do not put spaces around `::`: `Foo::class`, `String::length`
+
+Do not put a space before `?` used to mark a nullable type: `String?`
+
+As a general rule, avoid horizontal alignment of any kind. Renaming an identifier to a name with a different length
+should not affect the formatting of either the declaration or any of the usages.
+Put a space after `//`
 
 ### Function and expression body formatting
 
