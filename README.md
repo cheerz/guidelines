@@ -23,6 +23,38 @@ To configure IntelliJ/Android Studio according to this style guide, follow the s
 * Select `Predefined style` | `Kotlin style guide` from the menu.
 <sup>[[link](#applying-kotlin-style-guide)]</sup>
 
+### Setup hard wrap
+
+* Still in `Settings` | `Editor` | `Code Style` | `Kotlin`
+* Click `Wrapping and Braces` tab
+* Set `Hard wrap at` field to `120`
+<sup>[[link](#setup-hard-wrap)]</sup>
+
+### Setup blank lines
+
+* Still in `Settings` | `Editor` | `Code Style` | `Kotlin`
+* Click `Blank Lines` tab
+* In setction `Keep Maximum Blank lines`
+* * Set `In declarations:` to `1`
+* * Set `In code:` to `1`
+* * Set `Before '}':` to `1`
+* In setction `Minimun Blank lines`
+* * Set `After class header:` to `1`
+* * Set `Arround 'when' branches with {}` to `0`
+<sup>[[link](#setup-blank-lines)]</sup>
+
+### Setup imports
+
+* Still in `Settings` | `Editor` | `Code Style` | `Kotlin`
+* Click `Imports` tab
+* In setction `Top-level name import`
+* * Select entry `Use single line imports`
+* In section `Java Statics and Enum Members`
+* * Select entry `Use single line imports`
+* In section `Packages to Use Import with '*'`
+* * Remove `import java.util.*` entry by clicking the `-` button
+<sup>[[link](#setup-imports)]</sup>
+
 ## Source code organization
 
 ### Class layout
