@@ -14,7 +14,7 @@ It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033
 
 ## IDE setup
 
-To configure IntelliJ/Android Studio according to this style guide, follow the steps:
+To configure IntelliJ/Android Studio according to this style guide, you can either import the settings file in `Android Studio settings` folder or follow the steps:
 
 ### Applying Kotlin style guide
 
