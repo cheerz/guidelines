@@ -296,3 +296,92 @@ fun doSomething() { ... }
 
 fun doSomethingElse() { ... }
 ```
+
+## Code idioms
+
+### Early return
+
+Prefer early return syntax over big `if`/`else` blocks.
+
+```kotlin
+// Bad
+fun doSomething(condition: Boolean) {
+
+    if (condition) {
+    
+        // A
+        // lot 
+        // of 
+        // code 
+        // here
+
+    } else {
+        throw Exception(...)
+    }
+}
+```
+```kotlin
+// Good
+fun doSomething(condition: Boolean) {
+
+    if (!condition) {
+       throw Exception(...)
+    }
+    
+    // A
+    // lot 
+    // of 
+    // code 
+    // here
+}
+```
+
+```kotlin
+// Bad
+fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
+
+    var result = "SUCCESS"
+
+    if (someCondition) {
+        if (!name.isNullOrBlank()) {
+            if (intValue != 0) {
+                // Do Something here
+            } else {
+                result = "BAD_VALUE"
+            }
+        } else {
+            result = "BAD_NAME"
+        }
+    } else {
+        result = "BAD_CONDITION"
+    }
+
+    return result
+}
+```
+```kotlin
+// Good
+fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
+
+    if (!someCondition) {
+        return "BAD_CONDITION"
+    }
+
+    if (name.isNullOrBlank()) {
+        return "BAD_NAME"
+    }
+
+    if (intValue == 0) {
+        return "BAD_VALUE"
+    }
+
+    // Do Something
+    
+    return "SUCCESS"
+}
+```
+* Nesting code is reduced which makes the functions easier to read.
+* `if`/`else` statements will be closer together and you’ll be doing less hunting for opening and closing brackets.
+* The function reads more linear. Human brains are better at parsing linear things.
+* Often, you won't have to read the whole method to understand its behavior.
+<sup>[[link](#early-return)]</sup>
