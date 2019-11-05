@@ -394,7 +394,7 @@ fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
 ### Exhaustive when 
 
 Kotlin language does not provide a nice way to force the exhaustivity of `when` statements that do not return a value.
-If you need to check exhaustivity at compile-time, it's okay to use the following syntax although this is a hack.
+To check exhaustivity at compile-time, we must use the following syntax:
 
 ```kotlin
 // This is okay
@@ -405,22 +405,10 @@ when (state) {
 }.let { } // Hack to exhaust all when cases
 ```
 
-Note: Although we could use many syntax to do this, the only one authorized in the code base is the `let` one (with a comment). <br>
+Note: Although we could use many syntax to do this (`run`, `also`, etc.), the only one authorized in the code base is the `let` one (with a comment). <br>
 => `}.let { } // Hack to exhaust all when cases`
 
-If you don't need a compile time check, here is another the way to handle it
-
-```kotlin
-// This is okay
-when (state) {
-    State.PENDING -> handlePending()
-    State.SUCCESS -> handleSuccess()
-    State.FAILURE -> handleFailure()
-    else -> // Log or throw "doSomething() - State '$state' is not handled"
-}
-```
-
-The following statement will not be resilient to new state cases and we might forget to handle them.
+The following statement will not be resilient to new state cases and we might (and we will) forget to handle them.
 
 ```kotlin
 // This is dangerous
