@@ -70,9 +70,6 @@ Generally, the contents of a class is sorted in the following order:
 For Android/framework classes (e.g. `Activity` or `Fragment`) put framework methods first.
 Also, put related stuff together, so that someone reading the class from top to bottom would be able to follow the logic of what's happening.
 Higher-level stuff should go first (after framework methods if there are any).
-
-Put nested classes next to the code that uses those classes.
-If classes are intended to be used externally and aren't referenced inside the class, put them in the end, after the companion object.
 <sup>[[link](#class-layout)]</sup>
 
 ### Interface implementation layout
