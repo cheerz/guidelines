@@ -35,7 +35,7 @@ This can be one of these values (despite the list is not exhaustive):
 * *CI*: changes in the CI scripts
 * *Docs*: commit solely focused on adding documentation
 * *Style*: commit solely focused on code style
-* *Design*: changes in the UI
+* *Design*/*UI*: changes in the UI
 * *Refacto*: refactoring of some code
 * *Improve*: general purpose improvement
 * *Perf*: improvement in performance
