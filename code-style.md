@@ -127,6 +127,20 @@ The name should also suggest if the method is mutating the object or returning a
 When using an acronym as part of a declaration name, capitalize it if it consists of two letters (`IOStream`); capitalize only the first letter if it is longer (`XmlFormatter`, `HttpInputStream`).
 <sup>[[link](#choosing-good-names)]</sup>
 
+### Naming constants
+
+#### Activities arguments
+
+Activity arguments names should be **suffixed** by `kotlin _EXTRA_NAME` because when setting extra to the activity's arguments, the method to put **extra** asks for a variable `name` and a `value`.
+We choose to suffix to follow the english langage rules (the constant is an extra name of a value).
+Example : `PRODUCT_TAG_EXTRA_NAME`
+
+#### Fragments arguments
+
+Framgent arguments names should be **suffixed** by `kotlin _KEY` because when building the arguments of a fragment, the method to put values asks for a variable `key` and a `value`.
+We choose to suffix to follow the english langage rules (the constant is the key of a value).
+Example : `PRODUCT_TAG_KEY`
+
 ## Formatting
 
 ### Indentation
