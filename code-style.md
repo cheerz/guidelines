@@ -504,8 +504,7 @@ class MyFragment: Framgent() {
     private lateinit var adapter: MyAdapter
 
     override fun onCreate() {
-        val newAdapter = MyAdapter()
-        adapter = newAdapter
+        adapter = MyAdapter()
         recyclerView.adapter = newAdapter
     }
 
