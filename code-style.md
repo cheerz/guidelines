@@ -532,3 +532,58 @@ class MyFragment: Framgent() {
 ```
 
 Either the first and second type of getting the adapter is accepted in the project. In the first case, be careful that the stored adapter is always the one set in the RecyclerView. In the second case, keep in mind that it requires more computational work.
+
+### Listening to events from an entity deep in a hierarchy
+
+#### The listener and the emitter of the event are direct parent/child
+
+In this case, the emitter has to expose a `fun setOnEventListener(listener: (SomeData) -> Unit)` method and the parent can directly subscribe to it.
+
+#### The listener and the emitter of the event are separated by at least one layer of encapsulation
+
+It can happen that for instance, a top level entity (say an activity or a top level fragment) want to listen to clicks on an element (say a photo that can be selected) that is deep in the view hierarchy. In this case, we prefer the use of an implementation event bus (not the framework's one, but same idea). The listener will subscribe to events on the bus and the emitter will emit in it.
+
+Implementation example :
+```kotlin
+class MyActivity: Activity() {
+    private val photoClickSubscriptionKey: Int
+
+    init {
+        photoClickSubscriptionKey = DeepPhotoViewEvents.subscribe { onDeepPhotoViewClicked() }
+    }
+
+    override fun onDestroy() {
+        DeepPhotoViewEvents.unSubscribe(photoClickSubscriptionKey)
+    }
+
+    private fun onDeepPhotoViewClicked() {
+        println("got the message!")
+    }
+}
+
+class DeepPhotoView: View() {
+    private val internalData: SomeData
+
+    init {
+        setOnClickListener { DeepPhotoViewEvents.emit(internalData) }
+    }
+}
+
+object DeepPhotoViewEvents {
+    private val listeners = mutableMapOf<Int, (SomeData) -> Unit>()
+
+    fun emit(data: SomeData) {
+        listeners.forEach { it.value.invoke(data) }
+    }
+
+    fun subscribe(listener: (SomeData) -> Unit): Int {
+        val subscriptionKey = (listeners.keys.max() ?: 0) + 1
+        listeners[subscriptionKey] = listener
+        return subscriptionKey
+    }
+
+    fun unSubscribe(key: Int) {
+        listeners.remove(key)
+    }
+}
+```
