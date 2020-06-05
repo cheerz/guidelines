@@ -518,8 +518,7 @@ class MyFragment: Framgent() {
     private val recyclerView: RecyclerView
 
     override fun onCreate() {
-        val newAdapter = MyAdapter()
-        recyclerView.adapter = newAdapter
+        recyclerView.adapter = MyAdapter()
     }
 
     private fun getAdapter() = recyclerView.adapter as MyAdapter
