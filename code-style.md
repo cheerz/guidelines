@@ -543,6 +543,8 @@ In this case, the emitter has to expose a `fun setOnEventListener(listener: (Som
 
 It can happen that for instance, a top level entity (say an activity or a top level fragment) want to listen to clicks on an element (say a photo that can be selected) that is deep in the view hierarchy. In this case, we prefer the use of an implementation event bus (not the framework's one, but same idea). The listener will subscribe to events on the bus and the emitter will emit in it.
 
+[Illustration of a problem with the different solutions that can be used](https://docs.google.com/drawings/d/1QPfs1hEdWlpZ_SfFAuUKA6tJanA-8RtDMiASfBY8yPo/edit?usp=sharing). Here we choose the solution 2.
+
 Implementation example :
 ```kotlin
 class MyActivity: Activity() {
