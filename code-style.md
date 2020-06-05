@@ -129,17 +129,77 @@ When using an acronym as part of a declaration name, capitalize it if it consist
 
 ### Naming constants
 
-#### Activities arguments
+#### Activities (or Fragment) arguments
 
-Activity arguments names should be **suffixed** by `kotlin _EXTRA_NAME` because when setting extra to the activity's arguments, the method to put **extra** asks for a variable `name` and a `value`.
-We choose to suffix to follow the english langage rules (the constant is an extra name of a value).
-Example : `PRODUCT_TAG_EXTRA_NAME`
+Activity (namely Fragment) arguments names should be **prefixed** by `ARG_`
+Example : `ARG_PRODUCT_TAG`
 
-#### Fragments arguments
+Implementation examples :
+**Activity**
+```kotlin
+class MyActivity : AppCompatActivity() {
+    ...
 
-Framgent arguments names should be **suffixed** by `kotlin _KEY` because when building the arguments of a fragment, the method to put values asks for a variable `key` and a `value`.
-We choose to suffix to follow the english langage rules (the constant is the key of a value).
-Example : `PRODUCT_TAG_KEY`
+    companion object {
+        private const val ARG_MIN_PHOTO_COUNT = "com.printklub.polabox.customization.KEY_MIN_PHOTO_COUNT"
+        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.KEY_SELECTION_ID"
+        private const val ARG_SELECTION_MODE = "com.printklub.polabox.customization.KEY_SELECTION_MODE"
+        private const val ARG_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_PRODUCT_TAG"
+
+        fun startIntent(
+            context: Context,
+            model: Kustomization.Model,
+            selectionId: String,
+            selectionMode: GallerySelectionMode
+        ) = Intent(context, MyActivity::class.java)
+            .apply {
+                putExtra(ARG_MIN_PHOTO_COUNT, selectionId)
+                putExtra(ARG_SELECTION_ID, model.minPagesCount)
+                putExtra(ARG_SELECTION_MODE, model.productTag)
+                putExtra(ARG_PRODUCT_TAG, selectionMode)
+            }
+    }
+}
+```
+
+**Fragment**
+```kotlin
+class MyFragment : Fragment() {
+    ...
+
+    companion object {
+        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.ARG_SELECTION_ID"
+        private const val ARG_PHOTO_MIN_COUNT = "com.printklub.polabox.customization.ARG_PHOTO_MIN_COUNT"
+
+        fun newInstance(minCountPhoto: Int, selectionId: String) = MyFragment()
+            .apply { 
+                arguments = bundleOf(
+                    ARG_PHOTO_MIN_COUNT to minCountPhoto,
+                    ARG_SELECTION_ID to selectionId
+                )
+            }
+    }
+}
+```
+
+#### Keys of key/value pairs
+
+Given a set of keys and values, we may want to have constants defined for the keys. The constants must be **prefixed** by `KEY_`. This prefix does not apply in the special case of arguments of fragments or activities.
+Example : `KEY_PRODUCT_TAG`
+
+Implementation example :
+```kotlin
+const val KEY_MAGNET_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_MAGNET_PRODUCT_TAG"
+const val KEY_DIBOND_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_DIBOND_PRODUCT_TAG"
+
+val productTags = mapOf<String, String>(
+    KEY_MAGNET_PRODUCT_TAG to "magnet-retro"
+    KEY_DIBOND_PRODUCT_TAG to "metallic-print"
+)
+
+val dibondTag = productTags(KEY_DIBOND_PRODUCT_TAG)
+
+```
 
 ## Formatting
 
