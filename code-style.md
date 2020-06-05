@@ -490,3 +490,45 @@ when (state) {
 }
 ```
 <sup>[[link](#exhaustive-when)]</sup>
+
+## Framework specificities
+
+### Interacting with a RecyclerView's adapter
+
+Two ways of getting a RecyclerView's adapter can be found.
+
+```kotlin
+// 1st kind : storing the adapter
+class MyFragment: Framgent() {
+    private val recyclerView: RecyclerView
+    private lateinit var adapter: MyAdapter
+
+    override fun onCreate() {
+        val newAdapter = MyAdapter()
+        adapter = newAdapter
+        recyclerView.adapter = newAdapter
+    }
+
+    private fun doStuffOnAdapter() {
+        // The adapter can be got directly from the field of this fragment
+    }
+}
+
+// 2nd kind : getting the adapter in the RecyclerView
+class MyFragment: Framgent() {
+    private val recyclerView: RecyclerView
+
+    override fun onCreate() {
+        val newAdapter = MyAdapter()
+        recyclerView.adapter = newAdapter
+    }
+
+    private fun getAdapter() = recyclerView.adapter as MyAdapter
+
+    private fun doStuffOnAdapter() {
+        // The adapter can be got from the getAdapter() method
+    }
+}
+```
+
+Either the first and second type of getting the adapter is accepted in the project. In the first case, be careful that the stored adapter is always the one set in the RecyclerView. In the second case, keep in mind that it requires more computational work.
