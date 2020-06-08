@@ -555,45 +555,72 @@ It can happen that for instance, a top level entity (say an activity or a top le
 
 Implementation example :
 ```kotlin
-class MyActivity: Activity() {
-    private val photoClickSubscriptionKey: Int
+class GalleryActivity : AppCompatActivity() {
 
-    init {
-        photoClickSubscriptionKey = DeepPhotoViewEvents.subscribe { onDeepPhotoViewClicked() }
+    private val photoViewCallbacks: PhotoView.Callback = object : PhotoView.Callback() {
+        override fun onClick(photoData: SomePhotoData) {
+            super.onClick(photoData)
+            // handle simple click here
+        }
+
+        // onLongClick does not need to be implemented
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ...
+        PhotoView.Events.subscribe(photoViewCallbacks)
     }
 
     override fun onDestroy() {
-        DeepPhotoViewEvents.unSubscribe(photoClickSubscriptionKey)
-    }
-
-    private fun onDeepPhotoViewClicked() {
-        println("got the message!")
+        PhotoView.Events.unsubscribe(photoViewCallbacks)
+        ...
+        super.onDestroy()
     }
 }
 
-class DeepPhotoView: View() {
-    private val internalData: SomeData
+class PhotoView : View {
+    private val currentPhoto = SomePhotoData()
 
     init {
-        setOnClickListener { DeepPhotoViewEvents.emit(internalData) }
-    }
-}
-
-object DeepPhotoViewEvents {
-    private val listeners = mutableMapOf<Int, (SomeData) -> Unit>()
-
-    fun emit(data: SomeData) {
-        listeners.forEach { it.value.invoke(data) }
+        setOnClickListener { Events.emitOnClick(currentPhoto) }
+        setOnLongClickListener { Events.emitOnLongClick(currentPhoto); true }
     }
 
-    fun subscribe(listener: (SomeData) -> Unit): Int {
-        val subscriptionKey = (listeners.keys.max() ?: 0) + 1
-        listeners[subscriptionKey] = listener
-        return subscriptionKey
+    abstract class Callback {
+        open fun onClick(photoData: SomePhotoData) {}
+        open fun onLongClick(photoData: SomePhotoData) {}
     }
 
-    fun unSubscribe(key: Int) {
-        listeners.remove(key)
+    object Events {
+        private val listeners = HashSet<Callback>()
+
+        fun subscribe(callback: Callback): Boolean = listeners.add(callback)
+
+        fun unsubscribe(callback: Callback): Boolean = listeners.remove(callback)
+
+        fun emitOnClick(photoData: SomePhotoData) {
+            listeners.forEach {
+                try {
+                    it.onClick(photoData)
+                } catch (e: Exception) {
+                    // handle exception to prevent to allow all listeners to be called.
+                }
+            }
+        }
+
+        fun emitOnLongClick(photoData: SomePhotoData) {
+            listeners.forEach {
+                try {
+                    it.onLongClick(photoData)
+                } catch (e: Exception) {
+                    // handle exception to prevent to allow all listeners to be called.
+                }
+            }
+        }
     }
 }
 ```
+
+Note: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
+If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
