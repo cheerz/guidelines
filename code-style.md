@@ -141,10 +141,10 @@ class MyActivity : AppCompatActivity() {
     ...
 
     companion object {
-        private const val ARG_MIN_PHOTO_COUNT = "com.printklub.polabox.customization.KEY_MIN_PHOTO_COUNT"
-        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.KEY_SELECTION_ID"
-        private const val ARG_SELECTION_MODE = "com.printklub.polabox.customization.KEY_SELECTION_MODE"
-        private const val ARG_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_PRODUCT_TAG"
+        private const val ARG_MIN_PHOTO_COUNT = "min_photo_count"
+        private const val ARG_SELECTION_ID = "selection_id"
+        private const val ARG_SELECTION_MODE = "selection_mode"
+        private const val ARG_PRODUCT_TAG = "product_tag"
 
         fun startIntent(
             context: Context,
@@ -168,13 +168,13 @@ class MyFragment : Fragment() {
     ...
 
     companion object {
-        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.ARG_SELECTION_ID"
-        private const val ARG_PHOTO_MIN_COUNT = "com.printklub.polabox.customization.ARG_PHOTO_MIN_COUNT"
+        private const val ARG_MIN_PHOTO_COUNT = "min_photo_count"
+        private const val ARG_SELECTION_ID = "selection_id"
 
         fun newInstance(minCountPhoto: Int, selectionId: String) = MyFragment()
             .apply { 
                 arguments = bundleOf(
-                    ARG_PHOTO_MIN_COUNT to minCountPhoto,
+                    ARG_MIN_PHOTO_COUNT to minCountPhoto,
                     ARG_SELECTION_ID to selectionId
                 )
             }
@@ -189,18 +189,28 @@ Example : `KEY_PRODUCT_TAG`
 
 Implementation example :
 ```kotlin
-const val KEY_MAGNET_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_MAGNET_PRODUCT_TAG"
-const val KEY_DIBOND_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_DIBOND_PRODUCT_TAG"
+const val KEY_PRODUCT_TAG_MAGNET = "product_tag_magnet"
+const val KEY_PRODUCT_TAG_DIBOND = "product_tag_dibond"
 
 val productTags = mapOf<String, String>(
-    KEY_MAGNET_PRODUCT_TAG to "magnet-retro"
-    KEY_DIBOND_PRODUCT_TAG to "metallic-print"
+    KEY_PRODUCT_TAG_MAGNET to "magnet-retro"
+    KEY_PRODUCT_TAG_DIBOND to "metallic-print"
 )
 
-val dibondTag = productTags(KEY_DIBOND_PRODUCT_TAG)
-
+val dibondTag = productTags[KEY_PRODUCT_TAG_DIBOND]
 ```
 
+#### Prefix and grouping keys
+
+It's a good practice to regroup and prefix keys that are related to each other.
+
+```kotlin
+const val KEY_PRODUCT_TAG_MAGNET = "product_tag_magnet"
+const val KEY_PRODUCT_TAG_DIBOND = "product_tag_dibond"
+
+const val KEY_ACTION_ADD = "action_delete"
+const val KEY_ACTION_DELETE = "action_add"
+```
 ## Formatting
 
 ### Indentation
