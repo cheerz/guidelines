@@ -127,6 +127,80 @@ The name should also suggest if the method is mutating the object or returning a
 When using an acronym as part of a declaration name, capitalize it if it consists of two letters (`IOStream`); capitalize only the first letter if it is longer (`XmlFormatter`, `HttpInputStream`).
 <sup>[[link](#choosing-good-names)]</sup>
 
+### Naming constants
+
+#### Activities (or Fragment) arguments
+
+Activity (namely Fragment) arguments names should be **prefixed** by `ARG_`
+Example : `ARG_PRODUCT_TAG`
+
+Implementation examples :
+**Activity**
+```kotlin
+class MyActivity : AppCompatActivity() {
+    ...
+
+    companion object {
+        private const val ARG_MIN_PHOTO_COUNT = "com.printklub.polabox.customization.KEY_MIN_PHOTO_COUNT"
+        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.KEY_SELECTION_ID"
+        private const val ARG_SELECTION_MODE = "com.printklub.polabox.customization.KEY_SELECTION_MODE"
+        private const val ARG_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_PRODUCT_TAG"
+
+        fun startIntent(
+            context: Context,
+            model: Kustomization.Model,
+            selectionId: String,
+            selectionMode: GallerySelectionMode
+        ) = Intent(context, MyActivity::class.java)
+            .apply {
+                putExtra(ARG_MIN_PHOTO_COUNT, selectionId)
+                putExtra(ARG_SELECTION_ID, model.minPagesCount)
+                putExtra(ARG_SELECTION_MODE, model.productTag)
+                putExtra(ARG_PRODUCT_TAG, selectionMode)
+            }
+    }
+}
+```
+
+**Fragment**
+```kotlin
+class MyFragment : Fragment() {
+    ...
+
+    companion object {
+        private const val ARG_SELECTION_ID = "com.printklub.polabox.customization.ARG_SELECTION_ID"
+        private const val ARG_PHOTO_MIN_COUNT = "com.printklub.polabox.customization.ARG_PHOTO_MIN_COUNT"
+
+        fun newInstance(minCountPhoto: Int, selectionId: String) = MyFragment()
+            .apply { 
+                arguments = bundleOf(
+                    ARG_PHOTO_MIN_COUNT to minCountPhoto,
+                    ARG_SELECTION_ID to selectionId
+                )
+            }
+    }
+}
+```
+
+#### Keys of key/value pairs
+
+Given a set of keys and values, we may want to have constants defined for the keys. The constants must be **prefixed** by `KEY_`. This prefix does not apply in the special case of arguments of fragments or activities.
+Example : `KEY_PRODUCT_TAG`
+
+Implementation example :
+```kotlin
+const val KEY_MAGNET_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_MAGNET_PRODUCT_TAG"
+const val KEY_DIBOND_PRODUCT_TAG = "com.printklub.polabox.customization.KEY_DIBOND_PRODUCT_TAG"
+
+val productTags = mapOf<String, String>(
+    KEY_MAGNET_PRODUCT_TAG to "magnet-retro"
+    KEY_DIBOND_PRODUCT_TAG to "metallic-print"
+)
+
+val dibondTag = productTags(KEY_DIBOND_PRODUCT_TAG)
+
+```
+
 ## Formatting
 
 ### Indentation
@@ -416,3 +490,100 @@ when (state) {
 }
 ```
 <sup>[[link](#exhaustive-when)]</sup>
+
+## Framework specificities
+
+### Interacting with a RecyclerView's adapter
+
+Two ways of getting a RecyclerView's adapter can be found.
+
+```kotlin
+// 1st kind : storing the adapter
+class MyFragment: Framgent() {
+    private val recyclerView: RecyclerView
+    private lateinit var adapter: MyAdapter
+
+    override fun onCreate() {
+        adapter = MyAdapter()
+        recyclerView.adapter = newAdapter
+    }
+
+    private fun doStuffOnAdapter() {
+        // The adapter can be got directly from the field of this fragment
+    }
+}
+
+// 2nd kind : getting the adapter in the RecyclerView
+class MyFragment: Framgent() {
+    private val recyclerView: RecyclerView
+
+    override fun onCreate() {
+        recyclerView.adapter = MyAdapter()
+    }
+
+    private fun getAdapter() = recyclerView.adapter as MyAdapter
+
+    private fun doStuffOnAdapter() {
+        // The adapter can be got from the getAdapter() method
+    }
+}
+```
+
+Either the first and second type of getting the adapter is accepted in the project. In the first case, be careful that the stored adapter is always the one set in the RecyclerView. In the second case, keep in mind that it requires more computational work.
+
+### Listening to events from an entity deep in a hierarchy
+
+#### The listener and the emitter of the event are direct parent/child
+
+In this case, the emitter has to expose a `fun setOnEventListener(listener: (SomeData) -> Unit)` method and the parent can directly subscribe to it.
+
+#### The listener and the emitter of the event are separated by at least one layer of encapsulation
+
+It can happen that for instance, a top level entity (say an activity or a top level fragment) want to listen to clicks on an element (say a photo that can be selected) that is deep in the view hierarchy. In this case, we prefer the use of an implementation event bus (not the framework's one, but same idea). The listener will subscribe to events on the bus and the emitter will emit in it.
+
+[Illustration of a problem with the different solutions that can be used](https://docs.google.com/drawings/d/1QPfs1hEdWlpZ_SfFAuUKA6tJanA-8RtDMiASfBY8yPo/edit?usp=sharing). Here we choose the solution 2.
+
+Implementation example :
+```kotlin
+class MyActivity: Activity() {
+    private val photoClickSubscriptionKey: Int
+
+    init {
+        photoClickSubscriptionKey = DeepPhotoViewEvents.subscribe { onDeepPhotoViewClicked() }
+    }
+
+    override fun onDestroy() {
+        DeepPhotoViewEvents.unSubscribe(photoClickSubscriptionKey)
+    }
+
+    private fun onDeepPhotoViewClicked() {
+        println("got the message!")
+    }
+}
+
+class DeepPhotoView: View() {
+    private val internalData: SomeData
+
+    init {
+        setOnClickListener { DeepPhotoViewEvents.emit(internalData) }
+    }
+}
+
+object DeepPhotoViewEvents {
+    private val listeners = mutableMapOf<Int, (SomeData) -> Unit>()
+
+    fun emit(data: SomeData) {
+        listeners.forEach { it.value.invoke(data) }
+    }
+
+    fun subscribe(listener: (SomeData) -> Unit): Int {
+        val subscriptionKey = (listeners.keys.max() ?: 0) + 1
+        listeners[subscriptionKey] = listener
+        return subscriptionKey
+    }
+
+    fun unSubscribe(key: Int) {
+        listeners.remove(key)
+    }
+}
+```
