@@ -469,7 +469,6 @@ fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
     return "SUCCESS"
 }
 ```
-
 <sup>[[link](#early-return)]</sup>
 
 ### Exhaustive when 
@@ -503,7 +502,7 @@ when (state) {
 
 ## Framework specificities
 
-### Interacting with a RecyclerView's adapter
+### Getting RecyclerView's adapter
 
 Two ways of getting a RecyclerView's adapter can be found.
 
@@ -540,16 +539,25 @@ class MyFragment: Framgent() {
 ```
 
 Either the first and second type of getting the adapter is accepted in the project. In the first case, be careful that the stored adapter is always the one set in the RecyclerView. In the second case, keep in mind that it requires more computational work.
+<sup>[[link](#Getting-RecyclerViews-adapter)]</sup>
 
-### Listening to events from an entity deep in a hierarchy
+### Event spreading
 
-#### The listener and the emitter of the event are direct parent/child
+#### Managed implementation
 
-In this case, the emitter has to expose a `fun setOnEventListener(listener: (SomeData) -> Unit)` method and the parent can directly subscribe to it.
+In the case of a managed parent/child implementation, the emitter can expose a method to pass either a callback or a lamba depending of the complexity of information provided.
 
-#### The listener and the emitter of the event are separated by at least one layer of encapsulation
+ ```kotlin
+ fun setOnEventListener(lambda: (SomeData) -> Unit)
 
-It can happen that for instance, a top level entity (say an activity or a top level fragment) want to listen to clicks on an element (say a photo that can be selected) that is deep in the view hierarchy. In this case, we prefer the use of an implementation event bus (not the framework's one, but same idea). The listener will subscribe to events on the bus and the emitter will emit in it.
+ fun setOnEventListener(callback: Callback)
+ ```
+<sup>[[link](#managed-implementation)]</sup>
+
+#### Unmanaged implementation
+
+When creating reusable components, you are not necessarily aware of how many layers will separate the emitter from the receiver.
+In this case, creating a publish/subscribe pattern could help implementation and maintainability.
 
 [Illustration of a problem with the different solutions that can be used](https://docs.google.com/drawings/d/1QPfs1hEdWlpZ_SfFAuUKA6tJanA-8RtDMiASfBY8yPo/edit?usp=sharing). Here we choose the solution 2.
 
@@ -624,3 +632,4 @@ class PhotoView : View {
 
 Note: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
 If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
+<sup>[[link](#unmanaged-implementation)]</sup>
