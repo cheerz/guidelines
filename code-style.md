@@ -469,7 +469,6 @@ fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
     return "SUCCESS"
 }
 ```
-
 <sup>[[link](#early-return)]</sup>
 
 ### Exhaustive when 
@@ -503,7 +502,7 @@ when (state) {
 
 ## Framework specificities
 
-### Interacting with a RecyclerView's adapter
+### Getting RecyclerView's adapter
 
 Two ways of getting a RecyclerView's adapter can be found.
 
@@ -540,60 +539,100 @@ class MyFragment: Framgent() {
 ```
 
 Either the first and second type of getting the adapter is accepted in the project. In the first case, be careful that the stored adapter is always the one set in the RecyclerView. In the second case, keep in mind that it requires more computational work.
+<sup>[[link](#Getting-RecyclerViews-adapter)]</sup>
 
-### Listening to events from an entity deep in a hierarchy
+### Event spreading
 
-#### The listener and the emitter of the event are direct parent/child
+#### Managed implementation
 
-In this case, the emitter has to expose a `fun setOnEventListener(listener: (SomeData) -> Unit)` method and the parent can directly subscribe to it.
+In the case of a managed parent/child implementation, the emitter can expose a method to pass either a callback or a lamba depending of the complexity of information to spread.
+The Emitter can accept one or many listeners.
 
-#### The listener and the emitter of the event are separated by at least one layer of encapsulation
+ ```kotlin
+ // Set a single lambda
+ fun setOnEventListener(lambda: (SomeData) -> Unit)
 
-It can happen that for instance, a top level entity (say an activity or a top level fragment) want to listen to clicks on an element (say a photo that can be selected) that is deep in the view hierarchy. In this case, we prefer the use of an implementation event bus (not the framework's one, but same idea). The listener will subscribe to events on the bus and the emitter will emit in it.
+// Add a new callback
+ fun addOnEventListener(callback: Callback)
+ ```
+<sup>[[link](#managed-implementation)]</sup>
+
+#### Unmanaged implementation
+
+When creating reusable components, you are not necessarily aware of how many layers will separate the emitter from the receiver.
+In this case, creating a publish/subscribe pattern could help implementation and maintainability.
 
 [Illustration of a problem with the different solutions that can be used](https://docs.google.com/drawings/d/1QPfs1hEdWlpZ_SfFAuUKA6tJanA-8RtDMiASfBY8yPo/edit?usp=sharing). Here we choose the solution 2.
 
 Implementation example :
 ```kotlin
-class MyActivity: Activity() {
-    private val photoClickSubscriptionKey: Int
+class GalleryActivity : AppCompatActivity() {
 
-    init {
-        photoClickSubscriptionKey = DeepPhotoViewEvents.subscribe { onDeepPhotoViewClicked() }
+    private val photoViewCallbacks: PhotoView.Callback = object : PhotoView.Callback() {
+        override fun onClick(photoData: SomePhotoData) {
+            super.onClick(photoData)
+            // handle simple click here
+        }
+
+        // onLongClick does not need to be implemented
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        ...
+        PhotoView.Events.subscribe(photoViewCallbacks)
     }
 
     override fun onDestroy() {
-        DeepPhotoViewEvents.unSubscribe(photoClickSubscriptionKey)
-    }
-
-    private fun onDeepPhotoViewClicked() {
-        println("got the message!")
+        PhotoView.Events.unsubscribe(photoViewCallbacks)
+        ...
+        super.onDestroy()
     }
 }
 
-class DeepPhotoView: View() {
-    private val internalData: SomeData
+class PhotoView : View {
+    private val currentPhoto = SomePhotoData()
 
     init {
-        setOnClickListener { DeepPhotoViewEvents.emit(internalData) }
-    }
-}
-
-object DeepPhotoViewEvents {
-    private val listeners = mutableMapOf<Int, (SomeData) -> Unit>()
-
-    fun emit(data: SomeData) {
-        listeners.forEach { it.value.invoke(data) }
+        setOnClickListener { Events.emitOnClick(currentPhoto) }
+        setOnLongClickListener { Events.emitOnLongClick(currentPhoto); true }
     }
 
-    fun subscribe(listener: (SomeData) -> Unit): Int {
-        val subscriptionKey = (listeners.keys.max() ?: 0) + 1
-        listeners[subscriptionKey] = listener
-        return subscriptionKey
+    abstract class Callback {
+        open fun onClick(photoData: SomePhotoData) {}
+        open fun onLongClick(photoData: SomePhotoData) {}
     }
 
-    fun unSubscribe(key: Int) {
-        listeners.remove(key)
+    object Events {
+        private val listeners: Set = HashSet<Callback>()
+
+        fun subscribe(callback: Callback): Boolean = listeners.add(callback)
+
+        fun unsubscribe(callback: Callback): Boolean = listeners.remove(callback)
+
+        fun emitOnClick(photoData: SomePhotoData) {
+            listeners.forEach {
+                try {
+                    it.onClick(photoData)
+                } catch (e: Exception) {
+                    // handle exception to prevent to allow all listeners to be called.
+                }
+            }
+        }
+
+        fun emitOnLongClick(photoData: SomePhotoData) {
+            listeners.forEach {
+                try {
+                    it.onLongClick(photoData)
+                } catch (e: Exception) {
+                    // handle exception to prevent to allow all listeners to be called.
+                }
+            }
+        }
     }
 }
 ```
+Note 1: When storing a list of callbacks/listeners always use `Set` to avoid duplication issues.
+Note 2: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
+If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
+<sup>[[link](#unmanaged-implementation)]</sup>
