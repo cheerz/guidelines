@@ -545,12 +545,15 @@ Either the first and second type of getting the adapter is accepted in the proje
 
 #### Managed implementation
 
-In the case of a managed parent/child implementation, the emitter can expose a method to pass either a callback or a lamba depending of the complexity of information provided.
+In the case of a managed parent/child implementation, the emitter can expose a method to pass either a callback or a lamba depending of the complexity of information to spread.
+The Emitter can accept one or many listeners.
 
  ```kotlin
+ // Set a single lambda
  fun setOnEventListener(lambda: (SomeData) -> Unit)
 
- fun setOnEventListener(callback: Callback)
+// Add a new callback
+ fun addOnEventListener(callback: Callback)
  ```
 <sup>[[link](#managed-implementation)]</sup>
 
@@ -601,7 +604,7 @@ class PhotoView : View {
     }
 
     object Events {
-        private val listeners = HashSet<Callback>()
+        private val listeners: Set = HashSet<Callback>()
 
         fun subscribe(callback: Callback): Boolean = listeners.add(callback)
 
@@ -629,7 +632,7 @@ class PhotoView : View {
     }
 }
 ```
-
-Note: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
+Note 1: When storing a list of callbacks/listeners always use `Set` to avoid duplication issues.
+Note 2: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
 If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
 <sup>[[link](#unmanaged-implementation)]</sup>
