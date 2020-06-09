@@ -469,6 +469,8 @@ fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
     return "SUCCESS"
 }
 ```
+
+Note: As shown in the previous examples, skipping a line after a return statement improves readability.
 <sup>[[link](#early-return)]</sup>
 
 ### Exhaustive when 
@@ -633,6 +635,7 @@ class PhotoView : View {
 }
 ```
 Note 1: When storing a list of callbacks/listeners always use `Set` to avoid duplication issues.
+
 Note 2: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
 If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
 <sup>[[link](#unmanaged-implementation)]</sup>
