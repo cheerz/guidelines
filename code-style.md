@@ -55,6 +55,12 @@ To configure IntelliJ/Android Studio according to this style guide, you can eith
 * * Remove `import java.util.*` entry by clicking the `-` button
 <sup>[[link](#setup-imports)]</sup>
 
+### Set empty line at the end of a file
+
+* Go to `Settings` | `Editor` | `General`
+* Scroll to the `Save Files` section
+* Check `Ensure an empty line at the end of a file on Save`
+
 ## Source code organization
 
 ### Class layout
