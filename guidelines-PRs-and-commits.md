@@ -3,11 +3,12 @@
 ## Commit message structure
 
 A commit message should help the reviewers to get some context around a PR, but more importantly should help for investigation while attempting to fix nasty regression bugs.
-A well-written commit history is a very nice hint to quickly spot the origin of a bug by the information that it contains. 
+A well-written commit history is a very nice hint to quickly spot the origin of a bug by the information that it contains.
+Also for features and UX/UI changes you should add screenshots and videos.
 
 The general structure of a commit message should be as following:
 ```
-[Type] Short title
+[Type] ISSUE-ID - Short title
 
 Description preceded by an intentinally skipped line and having the
 lines hard-wrapped at 70 columns.
@@ -19,7 +20,7 @@ encouraged to be used, like lists:
 
 or code quotes: `ItemClass`
 
-Resolves: ISSUE-ID
+https://cheerz0.atlassian.net/browse/ISSUE-ID
 ```
 
 ### Commit structure breakdown
@@ -29,17 +30,13 @@ Resolves: ISSUE-ID
 Describes the type of the work done in the commit, or its scope.
 This can be one of these values (despite the list is not exhaustive):
 
-* *Feat*: new features
-* *Fix*: bugs solving
-* *Build*: changes on the build system
-* *CI*: changes in the CI scripts
-* *Docs*: commit solely focused on adding documentation
-* *Style*: commit solely focused on code style
-* *Design*/*UI*: changes in the UI
-* *Refacto*: refactoring of some code
-* *Improve*: general purpose improvement
-* *Perf*: improvement in performance
+* *Feat*: new features or improvement
+* *UI*: changes in the UI
+* *Tech*: tech purpose improvement (style, refacto, perf, etc.)
 * *Test*: commit focused on writing tests
+* *Build*: changes on the build system or in the CI scripts
+* *Docs*: commit solely focused on adding documentation
+* *Fix*: bugs solving
 
 #### Short title
 
