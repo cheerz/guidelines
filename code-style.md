@@ -39,8 +39,9 @@ To configure IntelliJ/Android Studio according to this style guide, you can eith
 * * Set `In code:` to `1`
 * * Set `Before '}':` to `1`
 * In setction `Minimun Blank lines`
-* * Set `After class header:` to `1`
+* * Set `After class header:` to `0`
 * * Set `Arround 'when' branches with {}` to `0`
+* * Set `Before declaration with comment or annotation` to `1`
 <sup>[[link](#setup-blank-lines)]</sup>
 
 ### Setup imports
