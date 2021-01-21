@@ -62,10 +62,20 @@ Finally, the commit message should be terminated by a line mentionning "Resolves
 
 Also, other ticket references can be mentionned in the description, along with links if relevant (especially for the crashlytics issues).
 
-# PR
+# Pull requests
 
 All of the above applies when creating a Pull Request:
 The Pull Request's title and description should follow the previously enounced rules.
 
 Also, **when squashing** your commits before merging to master, **be careful not to leave the working commit list as your resulting commit description**.
 Either copy the PR description into the resulting commit's description or rewrite it altogether.
+
+## Rules for authors
+* Diff should not be more than -/+200 lines (expect for conversion from Java to Kotlin).
+* Diff Should not alter more than 10 files (expect for assets pulls).
+* Author must be proofreaded the PR before submitting it for review.
+* Author must assign reviewers directly on Github.
+
+## Rules for reviewers
+* They should be reviewed in less than 24h when possible.
+* If you don't have the time today. Don't rush to approve PRs without really reviewing them.
