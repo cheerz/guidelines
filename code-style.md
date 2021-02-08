@@ -163,6 +163,25 @@ class MyTestCase {
      @Test fun ensureEverythingWorks_onAndroid() { ... }
 }
 ```
+### Add names to call argument methods
+
+When using method with argument that are not named in a property (null, or magic string or magic number) it is recommended to add the names to the argument methods. It adds context and allow code review to be easier than without them.
+```kotlin
+val draft = DraftItem(
+    existingDraftMetadata.id,
+    null,                // bad
+    "",                  // bad
+    dateOfCreation
+)
+```
+```kotlin
+val draft = DraftItem(
+    existingDraftMetadata.id,
+    imageUrl = null,     // good
+    title = "",          // good
+    dateOfCreation
+)
+```
 
 ### Choosing good names
 
