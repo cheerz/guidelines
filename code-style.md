@@ -450,6 +450,30 @@ fun doSomething() { ... }
 fun doSomethingElse() { ... }
 ```
 
+### Trailing commas
+
+<a name="trailing-commas"></a>
+Add a tailing comma `,` after function, constructor, lambda parameters, when there is more than 1 parameter. 
+<sup>[[link](#trailing-commas)]</sup>
+It allows to simplify the diff when adding new parameters to them.
+
+```kotlin
+// Bad
+class NoCommas(
+  val foo: Int,
+  val bar: Int
+)
+
+// Good
+class YesCommas(
+  val foo: Int,
+  val bar: Int,
+)
+
+// Good 
+class OneLineNoComma(val foo: Int)
+```
+
 ## Code idioms
 
 ### Early return
