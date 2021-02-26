@@ -57,11 +57,20 @@ To configure IntelliJ/Android Studio according to this style guide, you can eith
 * * Remove `import java.util.*` entry by clicking the `-` button
 <sup>[[link](#setup-imports)]</sup>
 
+### Setup trailing commas
+
+* Still in `Settings` | `Editor` | `Code Style` | `Kotlin`
+* Click `Other` tab
+* Select entry `Use trailing commas``
+<sup>[[link](#setup-trailing-commas)]</sup>
+
+
 ### Set empty line at the end of a file
 
 * Go to `Settings` | `Editor` | `General`
 * Scroll to the `Save Files` section
 * Check `Ensure an empty line at the end of a file on Save`
+<sup>[[link](#setup-empty-line-end-file)]</sup>
 
 ## Source code organization
 
@@ -454,8 +463,8 @@ fun doSomethingElse() { ... }
 
 <a name="trailing-commas"></a>
 Add a tailing comma `,` after function, constructor, lambda parameters, when there is more than 1 parameter. 
-<sup>[[link](#trailing-commas)]</sup>
 It allows to simplify the diff when adding new parameters to them.
+<sup>[[link](#trailing-commas)]</sup>
 
 ```kotlin
 // Bad
