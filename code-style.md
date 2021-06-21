@@ -297,13 +297,13 @@ const val KEY_ACTION_DELETE = "action_add"
 
 #### Icons
 Icons defined in the design system must be set in the design module. 
-They must be prefixed by `ic_` and postfixed by their size (24 or 16 dp) meaning for example `_24dp`.
+They must be prefixed by `ic_` and postfixed by their size (24 or 16 dp) meaning for example `_24`.
 
 Icons are mono color, so they can be easily tinted when used.
 
 #### Design System images (AKA icons bicolors)
 These images which are vectors with multiple colors are also located in the design module if they are defined in the design system.
-The are prefixed by `img_` and postfixed by `_bicolors_XXdp` where XX is their size (meaning 72 or 24 dp).
+The are prefixed by `img_` and postfixed by `_bicolors_XX` where XX is their size (meaning 72 or 24 dp).
 When importing the vector asset, remove hardcoded colors in the XML describing the icons and set the associated color (@color/foo). 
 
 As these images are not mono color, it's not possible to tint them at use. 
