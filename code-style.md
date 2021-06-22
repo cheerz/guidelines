@@ -305,9 +305,9 @@ Icons are mono color, so they can be easily tinted when used.
 
 #### Design System images (AKA icons bicolors)
 These images which are vectors with multiple colors are also located in the design module if they are defined in the design system.
-The are prefixed by `img_` and postfixed by `_bicolors_XX` where XX is their size (meaning 160, 72 or 24 dp). 
+The are prefixed by `img_` and postfixed by their size (meaning 160, 72 or 24 dp). 
 
-Example `img_package_bicolors_72`for the image named package and with size 72x72.
+Example `img_package_72`is for the image named package and with size 72x72.
 
 When importing the vector asset, remove hardcoded colors in the XML describing the icons and set the associated color (@color/foo). 
 
