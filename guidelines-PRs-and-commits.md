@@ -30,13 +30,14 @@ https://cheerz0.atlassian.net/browse/ISSUE-ID
 Describes the type of the work done in the commit, or its scope.
 This can be one of these values (despite the list is not exhaustive):
 
-* *Feat*: new features or improvement
-* *UI*: changes in the UI
-* *Tech*: tech purpose improvement (style, refacto, perf, etc.)
-* *Test*: commit focused on writing tests
-* *Build*: changes on the build system or in the CI scripts
-* *Docs*: commit solely focused on adding documentation
-* *Fix*: bugs solving
+* *Feat*: New features or improvement
+* *UI*: Changes in the UI
+* *Tech*: Tech purpose improvement (style, refacto, perf, etc.)
+* *Tracking*: Update tracking outputs or internal mechanics
+* *Test*: Commit focused on writing tests
+* *Build*: Changes on the build system or CI scripts
+* *Docs*: Commit focused on adding documentation
+* *Fix*: Bugs solving
 
 #### Short title
 
