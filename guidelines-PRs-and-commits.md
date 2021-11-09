@@ -78,13 +78,6 @@ Either copy the PR description into the resulting commit's description or rewrit
 * Author must assign reviewers directly on Github.
 
 ## Rules for reviewers
-* They should be reviewed in less than 24h when possible.
+* PRs should be reviewed in less than 24h when possible.
 * If you don't have the time today. Don't rush to approve PRs without really reviewing them.
-* You have to use tag to identify your intention and add meaning in code review comments, we use emoji as tag, here is the list: 
-  * 👍  `:+1:`        I like this and I want the author to know it! This is a way to highlight positive parts of a code review.
-  * ❓  `:question:`  I have a question. This should be a fully formed question with sufficient information and context that requires a response.
-  * 💣  `:bomb:`      Mandatory change, code that can crash or have big impact in production
-  * 📝  `:memo:`      Used by the author or the PR to add context on a specific part of the code
-  * ⛏️  `:pick:`      This is a nitpick. This does not require any changes and is often better left unsaid. This may include stylistic, formatting, or organization suggestions and should likely be prevented/enforced by linting if they really matter
-  * 🤔  `:thinking:`  When you comment without being 100% sure of you
-  * 🕐  `:clock1:`    Suggestion for refactoring. The refacto will be done in a separated PR. Create a ticket, and the author or someone else will address it.
+* You can add meaning to your PR comments by using [Code Review Emojis](code-review-emojis.md).
