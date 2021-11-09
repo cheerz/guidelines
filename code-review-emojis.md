@@ -6,7 +6,12 @@ A simple emoji legend to help convey intention and added meaning in code review 
 
 A little bit of emoji can go a long way when it comes to code reviews and make giving and receiving code review a little bit more enjoyable 😃.
 
-Using CREG (Code Review Emoji Guide) puts more ownership on the reviewer to give the reviewee added context and clarity to follow up on code review. For example, knowing whether something really requires action (🔧), highlighting nit-picky comments (⛏), flagging out of scope items for follow-up (📌) and clarifying items that don’t necessarily require action but are worth saying ( 😃, 📝, 🤔 )
+Using CREG (Code Review Emoji Guide) puts more ownership on the reviewer to give the reviewee added context and clarity to follow up on code review. 
+For example:
+* Knowing whether something really requires action (🔧)
+* Highlighting nit-picky comments (⛏)
+* Flagging out of scope items for follow-up (🕐) 
+* Clarifying items that don’t necessarily require action but are worth saying (👍, 📝, 💭)
 
 ## Emoji Legend
 
