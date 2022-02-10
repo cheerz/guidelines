@@ -766,3 +766,36 @@ Note 1: When storing a list of callbacks/listeners always use `Set` to avoid dup
 Note 2: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
 If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
 <sup>[[link](#unmanaged-implementation)]</sup>
+
+### View visibility management
+We have multiple ways to change a view visibility.
+We can use the original `View.setVisibility(visibility: Int)` with `visibility` as an integer value between `View.VISIBLE`, `View.INVISIBLE` or `View.GONE` ; or with AndroidX core KTX use inline vars `View.isVisible: Boolean`, `View.isInvisible: Boolean` and `View.isGone: Boolean`.
+By default we recommand to use `View.isVisible: Boolean` instead of `View.setVisibility(visibility: Int)` with `View.VISIBLE` or `View.GONE`
+As setting a view as invisible is less common, we can continue to use `View.setVisibility(visibility: Int)` with `View.INVISIBLE`.
+
+```kotlin
+    // tolerated but verbose
+    private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
+        if(isComplementAddressShowing) {
+            tvAddCompanyInfo.setVisibility(View.GONE)
+            inputLayoutCompany.setVisibility(View.VISIBLE)
+            inputLayoutVat.setVisibility(View.VISIBLE)
+        } else {
+            tvAddCompanyInfo.setVisibility(View.VISIBLE)
+            inputLayoutCompany.setVisibility(View.GONE)
+            inputLayoutVat.setVisibility(View.GONE)
+        }
+    }
+```
+
+```
+```kotlin
+    // concise
+    private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
+        tvAddCompanyInfo.isGone = isComplementAddressShowing
+        inputLayoutCompany.isVisible = isComplementAddressShowing
+        inputLayoutVat.isVisible = isComplementAddressShowing
+    }
+```
+
+As we can see using KTX view visiblity can be more concise and more readable
