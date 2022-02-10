@@ -774,7 +774,7 @@ By default we recommand to use `View.isVisible: Boolean` instead of `View.setVis
 As setting a view as invisible is less common, we can continue to use `View.setVisibility(visibility: Int)` with `View.INVISIBLE`.
 
 ```kotlin
-    // tolerated but verbose
+    // Bad using setVisibility
     private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
         if(isComplementAddressShowing) {
             tvAddCompanyInfo.setVisibility(View.GONE)
@@ -788,9 +788,8 @@ As setting a view as invisible is less common, we can continue to use `View.setV
     }
 ```
 
-```
 ```kotlin
-    // concise
+    // Good and concise with KTX
     private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
         tvAddCompanyInfo.isGone = isComplementAddressShowing
         inputLayoutCompany.isVisible = isComplementAddressShowing
