@@ -770,7 +770,7 @@ If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fin
 ### View visibility management
 We have multiple ways to change a view visibility.
 We can use the original `View.setVisibility(visibility: Int)` with `visibility` as an integer value between `View.VISIBLE`, `View.INVISIBLE` or `View.GONE` ; or with AndroidX core KTX use inline vars `View.isVisible: Boolean`, `View.isInvisible: Boolean` and `View.isGone: Boolean`.
-By default we recommand to use `View.isVisible: Boolean` instead of `View.setVisibility(visibility: Int)` with `View.VISIBLE` or `View.GONE`
+By default we recommend to use `View.isVisible: Boolean` instead of `View.setVisibility(visibility: Int)` with `View.VISIBLE` or `View.GONE`
 As setting a view as invisible is less common, we can continue to use `View.setVisibility(visibility: Int)` with `View.INVISIBLE`.
 
 ```kotlin
