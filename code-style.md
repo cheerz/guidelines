@@ -776,7 +776,7 @@ As setting a view as invisible is less common, we can continue to use `View.setV
 ```kotlin
     // Bad using setVisibility
     private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
-        if(isComplementAddressShowing) {
+        if (isComplementAddressShowing) {
             tvAddCompanyInfo.setVisibility(View.GONE)
             inputLayoutCompany.setVisibility(View.VISIBLE)
             inputLayoutVat.setVisibility(View.VISIBLE)
