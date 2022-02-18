@@ -794,7 +794,7 @@ As setting a view as invisible is less common and often related between switchin
     private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
         tvAddCompanyInfo.isVisible = !isComplementAddressShowing
         inputLayoutCompany.isVisible = isComplementAddressShowing
-        val vatVisibility = if(isComplementAddressShowing) View.VISIBLE else View.INVISIBLE
+        val vatVisibility = if (isComplementAddressShowing) View.VISIBLE else View.INVISIBLE
         inputLayoutVat.setVisibility(vatVisibility)
     }
 ```
