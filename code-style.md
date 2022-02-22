@@ -766,3 +766,37 @@ Note 1: When storing a list of callbacks/listeners always use `Set` to avoid dup
 Note 2: The encapsulation of `Events` and `Callback` inside `PhotoView` is not mandatory.
 If `PhotoView.Events` and `PhotoView.Callback` grow too much, it's perfectly fine to create external classes: `PhotoViewEvents` and `PhotoViewCallback`.
 <sup>[[link](#unmanaged-implementation)]</sup>
+
+### View visibility management
+We have multiple ways to change a view visibility.
+We can use the original `View.setVisibility(visibility: Int)` with `visibility` as an integer value between `View.VISIBLE`, `View.INVISIBLE` or `View.GONE` ; or with AndroidX core KTX use inline vars `View.isVisible: Boolean`, `View.isInvisible: Boolean` and `View.isGone: Boolean`.
+By default we recommend to use `View.isVisible: Boolean` instead of `View.setVisibility(visibility: Int)` with `View.VISIBLE` or `View.GONE`. Thus, to set a view as `GONE` (not visible), we should use `isVisible` setting the property to `false `(not use `View.isGone: Boolean`)
+
+As setting a view as invisible is less common and often related between switching view from invisible to visible, we continue to use `View.setVisibility(visibility: Int)` with `View.INVISIBLE`.
+
+```kotlin
+    // Bad using setVisibility only
+    private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
+        if (isComplementAddressShowing) {
+            tvAddCompanyInfo.setVisibility(View.GONE)
+            inputLayoutCompany.setVisibility(View.VISIBLE)
+            inputLayoutVat.setVisibility(View.VISIBLE)
+        } else {
+            tvAddCompanyInfo.setVisibility(View.VISIBLE)
+            inputLayoutCompany.setVisibility(View.GONE)
+            inputLayoutVat.setVisibility(View.INVISIBLE)
+        }
+    }
+```
+
+```kotlin
+    // Good and concise with KTX for visible and gone visibility state
+    private fun manageCompanyInfoShowing(isComplementAddressShowing: Boolean) {
+        tvAddCompanyInfo.isVisible = !isComplementAddressShowing
+        inputLayoutCompany.isVisible = isComplementAddressShowing
+        val vatVisibility = if (isComplementAddressShowing) View.VISIBLE else View.INVISIBLE
+        inputLayoutVat.setVisibility(vatVisibility)
+    }
+```
+
+As we can see using KTX view visiblity can be more concise and more readable
