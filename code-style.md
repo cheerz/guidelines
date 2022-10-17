@@ -12,6 +12,9 @@ It was inspired by [GitHub's Ruby guide](https://web.archive.org/web/20160410033
   * [Id naming](#id-naming)
   * [Naming rules](#naming-rules)
   * [Formatting](#formatting)
+  * [Code idioms](#code-idioms)
+  * [Framework specificities](#framework-specificities)
+
 
 ## IDE setup
 
@@ -800,3 +803,20 @@ As setting a view as invisible is less common and often related between switchin
 ```
 
 As we can see using KTX view visiblity can be more concise and more readable
+
+### Content description
+For illustration, icons etc. we decided that instead of setting empty content description we should use null
+```kotlin
+// Good usage of image without content description
+LoadableImage(
+    url = url,
+    contentDescription = null,
+)
+```
+```kotlin
+// Bad usage of image without content description
+LoadableImage(
+    url = url,
+    contentDescription = "",
+)
+```        
