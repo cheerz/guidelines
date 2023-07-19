@@ -460,7 +460,7 @@ Add a new line after conditionals, blocks, case statements, etc.
 
 ```kotlin
 if (robot.isAwesome) {
-    doSomehting()
+    doSomething()
 }
 
 doSomehtingElse()
@@ -602,35 +602,6 @@ fun doSomething(someCondition: Boolean, name: String?, intValue: Int): String {
 
 Note: As shown in the previous examples, skipping a line after a return statement improves readability.
 <sup>[[link](#early-return)]</sup>
-
-### Exhaustive when 
-
-Kotlin language does not provide a nice way to force the exhaustivity of `when` statements that do not return a value.
-To check exhaustivity at compile-time, we must use the following syntax:
-
-```kotlin
-// This is okay
-when (state) {
-    State.PENDING -> handlePending()
-    State.SUCCESS -> handleSuccess()
-    State.FAILURE -> handleFailure()
-}.let { } // Hack to exhaust all when cases
-```
-
-Note: Although we could use many syntax to do this (`run`, `also`, etc.), the only one authorized in the code base is the `let` one (with a comment). <br>
-=> `}.let { } // Hack to exhaust all when cases`
-
-The following statement will not be resilient to new state cases and we might (and we will) forget to handle them.
-
-```kotlin
-// This is dangerous
-when (state) {
-    State.PENDING -> handlePending()
-    State.SUCCESS -> handleSuccess()
-    State.FAILURE -> handleFailure()
-}
-```
-<sup>[[link](#exhaustive-when)]</sup>
 
 ## Framework specificities
 
