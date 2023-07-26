@@ -1,5 +1,8 @@
-# Android team guidelines
+# Tech team guidelines
 
-* [Code Style](code-style.md) 
-* [Guidelines - PRs and commits](guidelines-PRs-and-commits.md)
+## Common
+* [PRs and commits](guidelines-PRs-and-commits.md)
 * [Code Review Emojis](code-review-emojis.md)
+
+## Android
+* [Code Style](android/code-style.md)
