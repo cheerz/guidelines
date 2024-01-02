@@ -39,7 +39,7 @@ To configure IntelliJ/Android Studio according to this style guide, you can eith
 * In section `Java Statics and Enum Members`
 * * Select entry `Use single line imports`
 * In section `Packages to Use Import with '*'`
-* * Remove `import java.util.*` entry by clicking the `-` button
+* * Remove packages clicking the `-` button
 <sup>[[link](#setup-imports)]</sup>
 
 ## Setup trailing commas
